@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    /> -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Movie Insight - SB Admin</title>
+    <link href="styles.css" rel="stylesheet" />
+    <link
+      href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Material Design Bootstrap -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <!-- fontawesome -->
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+    integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+    crossorigin="anonymous"
+  />
+  <body>
+    <div class="row">
+      <div class="col-xs-1">
+        <div style="width: 8px"></div>
+      </div>
+      <div style="width: 290px" class="col-xs-3 side-panel">
+        <div
+          style="
+            padding-left: 3px;
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 217px;
+          "
+        >
+          Steady-Selling
+          <br />
+          Movies
+        </div>
+        <div style="position: absolute; top: 140px; font-size: 17px">
+          <p style="margin-left: 5px; display: inline-block">
+            Current number of movies:
+          </p>
+          <p id="current_count" style="display: inline-block"></p>
+        </div>
+
+        <div style="position: absolute; top: 260px; font-size: 22px">
+          <a
+            href="#"
+            data-toggle="popover_tip"
+            data-html="true"
+            title="How to use Steady-Selling Movies"
+            data-content="<img src='tip.png' width='250' /><div>영화 콘텐츠가 다양화 되면서, 한 영화 콘텐츠에서 여러 장르를 아우르는 경우가 많습니다.
+                OR, Must 체크 박스를 활용하여 다양한 조건의 영화의 인사이트를 확인해보세요.</div>
+                <div style='color: blue'>EX) 모든 액션 혹은 코미디의 영화들 중에서 가족 영화만을 보고 싶을 때</div>
+                "
+            style="text-decoration: none; color: #b3912a"
+            ><i class="fas fa-lightbulb"></i> TIP!</a
+          >
+        </div>
+
+        <div style="line-height: 20px; font-size: 18px; padding: 3px">
+          <div
+            class=""
+            style="
+              width: 125px;
+              list-style-type: none;
+              font-size: 10px;
+              display: flex;
+              position: relative;
+              left: 107px;
+              bottom: 3px;
+            "
+          >
+            <li>
+              <a
+                href="#"
+                style="
+                  font-weight: bold;
+                  color: black;
+                  position: relative;
+                  right: 5px;
+                "
+                data-toggle="tooltip_or"
+                data-html="true"
+                data-placement="top"
+                title="<img src='or.png' width='180px'/><div>OR 체크 박스에서 선택한 장르가 하나라도 포함된 모든 영화 콘텐츠를 보여줍니다.</div><div>cf. 집합의 합집합 개념</div>"
+                ><u>OR</u></a
+              >
+            </li>
+            &nbsp; &nbsp;
+            <li>
+              <a
+                href="#"
+                style="
+                  font-weight: bold;
+                  color: black;
+                  position: relative;
+                  right: 5px;
+                "
+                data-toggle="tooltip_must"
+                data-html="true"
+                data-placement="top"
+                title="<img src='must.png' width='180px'/><div>Must 체크 박스에서 선택한 장르를 공통적으로 모두 포함하고 있는 영화 콘텐츠만을 보여줍니다.</div><div>cf. 집합의 교집합 개념</div>"
+                ><u>MUST</u></a
+              >
+            </li>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Action
+              <input
+                id="Action"
+                name="Action"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Action2"
+                class="second"
+                name="Action2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Action" id="Action" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Adventure
+              <input
+                id="Adventure"
+                name="Adventure"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Adventure2"
+                class="second"
+                name="Adventure"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter
+                value="0.5"
+                min="0"
+                max="1"
+                name="Adventure"
+                id="Adventure"
+              />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Animation
+              <input
+                id="Animation"
+                name="Animation"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Animation2"
+                class="second"
+                name="Animation"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter
+                value="0.5"
+                min="0"
+                max="1"
+                name="Animation"
+                id="Animation"
+              />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Biography
+              <input
+                id="Biography"
+                name="Biography"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Biography2"
+                class="second"
+                name="Biography2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter
+                value="0.5"
+                min="0"
+                max="1"
+                name="Biography"
+                id="Biography"
+              />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Comedy
+              <input
+                id="Comedy"
+                name="Comedy"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Comedy2"
+                class="second"
+                name="Comedy"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Comedy" id="Comedy" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Crime
+              <input
+                id="Crime"
+                name="Crime"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Crime2"
+                class="second"
+                name="Crime"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Crime" id="Crime" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Drama
+              <input
+                id="Drama"
+                name="Drama"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Drama2"
+                class="second"
+                name="Drama2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Drama" id="Drama" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Family
+              <input
+                id="Family"
+                name="Family"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Family2"
+                class="second"
+                name="Family2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Family" id="Family" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Fantasy
+              <input
+                id="Fantasy"
+                name="Fantasy"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Fantasy2"
+                class="second"
+                name="Fantasy2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Fantasy" id="Fantasy" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >History
+              <input
+                id="History"
+                name="History"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="History2"
+                class="second"
+                name="History2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="History" id="History" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Horror
+              <input
+                id="Horror"
+                name="Horror"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Horror2"
+                class="second"
+                name="Horror2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Horror" id="Horror" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Mystery
+              <input
+                id="Mystery"
+                name="Mystery"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Mystery2"
+                class="second"
+                name="Mystery2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Mystery" id="Mystery" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Romance
+              <input
+                id="Romance"
+                name="Romance"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Romance2"
+                class="second"
+                name="Romance2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Romance" id="Romance" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Sci-Fi
+              <input
+                id="Sci-Fi"
+                name="Sci-Fi"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Sci-Fi2"
+                class="second"
+                name="Sci-Fi2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Sci-Fi" id="Sci-Fi" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Sport
+              <input
+                id="Sport"
+                name="Sport"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Sport2"
+                class="second"
+                name="Sport2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter value="0.5" min="0" max="1" name="Sport" id="Sport" />
+            </label>
+          </div>
+          <div>
+            <label class="align-items-center"
+              >Thriller
+              <input
+                id="Thriller"
+                name="Thriller"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Thriller2"
+                class="second"
+                name="Thriller2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter
+                value="0.5"
+                min="0"
+                max="1"
+                name="Thriller"
+                id="Thriller"
+              />
+            </label>
+          </div>
+          <div style="border-bottom: 2px solid black">
+            <label class="align-items-center"
+              >Music
+
+              <input
+                id="Music/Musical"
+                name="Music/Musical"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <input
+                id="Music/Musical2"
+                class="second"
+                name="Music/Musical2"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+              <meter
+                value="0.5"
+                min="0"
+                max="1"
+                name="Music/Musical"
+                id="Music_and_Musical"
+              />
+            </label>
+            <div
+              class=""
+              style="
+                width: 125px;
+                list-style-type: none;
+                font-size: 10px;
+                display: flex;
+                justify-content: space-around;
+                position: relative;
+                left: 140px;
+                bottom: 10px;
+              "
+            >
+              <li>0</li>
+              <li>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;50
+              </li>
+              <li>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100(%)
+              </li>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px">
+            <label style="font-size: 20px"
+              >재개봉
+              <input
+                id="rereleased"
+                name="rereleased"
+                onclick="handleClick(event)"
+                type="checkbox"
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-1">
+        <div style="width: 60px"></div>
+      </div>
+      <div class="col-xs-7">
+        <div style="margin-top: 70px" class="row">
+          <div class="col-xs-6 justify-content-center align-items-center">
+            <div
+              id="my_dataviz2"
+              style="margin-left: 70px"
+              class="za"
+              width="400px;"
+              height="50"
+            ></div>
+          </div>
+          <div class="col-xs-6">
+            <div id="my_dataviz3" style="margin-left: 70px"></div>
+          </div>
+        </div>
+        <div id="my_dataviz" width="100%" class="za" height="50"></div>
+      </div>
+    </div>
+
+    <script src="checkboxes.js"></script>
+    <script src="parallel.js"></script>
+    <script src="radviz.js"></script>
+    <script src="subgraph.js"></script>
+    <!-- JQuery -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    ></script>
+    <!-- Bootstrap tooltips -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"
+    ></script>
+    <!-- Bootstrap core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"
+    ></script>
+    <!-- MDB core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        new WOW().init();
+      });
+      $(document).ready(function () {
+        $('[data-toggle="tooltip_or"]').tooltip();
+      });
+      $(document).ready(function () {
+        $('[data-toggle="tooltip_must"]').tooltip();
+      });
+      $(document).ready(function () {
+        $('[data-toggle="popover_tip"]').popover();
+      });
+    </script>
+  </body>
+</html>
