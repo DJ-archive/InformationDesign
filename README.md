@@ -24,4 +24,4 @@
 
 # \***\*An introductory video.\*\***
 
-<video src='./video/introductory_video.mp4' width=180/>
+<video src='https://github.com/sanghyeok-han/InformationDesign/blob/main/video/introductory_video.mp4?raw=true' width=180/>
