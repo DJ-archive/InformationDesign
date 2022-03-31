@@ -22,4 +22,6 @@
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/64157f6e-3fe5-436c-be64-c8d2dbf19b2c/Untitled.png)
 
-# ****An introductory video.****
+# \***\*An introductory video.\*\***
+
+<video src='./video/introductory_video.mp4' width=180/>
