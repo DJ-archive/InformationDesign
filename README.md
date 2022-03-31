@@ -10,17 +10,17 @@
 
 # Data
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e8ae7282-f363-400e-965d-98ef7b800d43/Untitled.png)
+![Untitled](https://raw.githubusercontent.com/sanghyeok-han/InformationDesign/main/images/1.png)
 
 # Dashboard
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cbcd474c-96b0-4221-9b84-4027e429d0e3/Untitled.png)
+![Untitled](https://raw.githubusercontent.com/sanghyeok-han/InformationDesign/main/images/2.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4f41dbd6-e86b-4c69-aa77-0baa48ea64c8/Untitled.png)
+![Untitled](https://raw.githubusercontent.com/sanghyeok-han/InformationDesign/main/images/3.png)
 
 # Conclusion
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/64157f6e-3fe5-436c-be64-c8d2dbf19b2c/Untitled.png)
+![Untitled](https://raw.githubusercontent.com/sanghyeok-han/InformationDesign/main/images/4.png)
 
 # \***\*An introductory video.\*\***
 
