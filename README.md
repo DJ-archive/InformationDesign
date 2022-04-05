@@ -20,6 +20,3 @@
 
 ![Untitled](https://raw.githubusercontent.com/sanghyeok-han/InformationDesign/main/images/4.png)
 
-# An introductory video
-
-<video src='https://github.com/sanghyeok-han/InformationDesign/blob/main/video/introductory_video.mp4?raw=true' width=180/>
