@@ -1,3 +1,5 @@
+임시: https://sanghyeok-han.github.io/InformationDesign/
+
 # Our project, “Steady Selling Movies”
 
 **Steady Selling Movies는 2010년부터 2016년까지 imdb 전세계 1100개 영화데이터를 바탕으로, 영화의 흥행에 영향을 주는 변수들 간의 관계와 시간에 따라 변화하는 인기의 흐름을 parallel coordinates와 radviz로 시각화하였다. 이를 통해 다양한 범주형, 수치형 변수들이 영화의 첫 개봉부터 재개봉까지의 전체 흥망성쇠 흐름에 어떤 영향을 주는지 흥행 패턴을 파악할 수 있다.**
