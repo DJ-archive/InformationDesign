@@ -1,4 +1,4 @@
-임시: https://sanghyeok-han.github.io/InformationDesign/
+웹페이지 url: https://sanghyeok-han.github.io/InformationDesign/
 
 # Our project, “Steady Selling Movies”
 
