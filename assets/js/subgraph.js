@@ -1,11 +1,11 @@
-var csvPath3 = "movies25.csv"
+var csvPath3 = "assets/data/movies25.csv";
 
 var marginStacked = { top: 20, right: 150, bottom: 50, left: 50 },
   widthStacked = 600 - marginStacked.left - marginStacked.right,
-  heightStacked = 400 - marginStacked.top - marginStacked.bottom
+  heightStacked = 400 - marginStacked.top - marginStacked.bottom;
 
-var xScale = d3.scale.ordinal().rangeRoundBands([0, heightStacked], 0.3)
-var yScale = d3.scale.linear().rangeRound([heightStacked, 0])
+var xScale = d3.scale.ordinal().rangeRoundBands([0, heightStacked], 0.3);
+var yScale = d3.scale.linear().rangeRound([heightStacked, 0]);
 
 var color = d3.scale
   .ordinal()
@@ -27,7 +27,7 @@ var color = d3.scale
     "#FFBE7D",
     "#F28E2B",
     "#A0CBE8",
-  ])
+  ]);
 
 var segmentsStacked = [
   "Action",
@@ -47,17 +47,17 @@ var segmentsStacked = [
   "Sport",
   "Thriller",
   "Music/Musical",
-]
+];
 
-var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize([0])
+var xAxis = d3.svg.axis().scale(xScale).orient("bottom").innerTickSize([0]);
 
 var yAxis = d3.svg
   .axis()
   .scale(yScale)
   .orient("left")
-  .tickFormat(d3.format(".2s")) // for the stacked totals version
+  .tickFormat(d3.format(".2s")); // for the stacked totals version
 
-var stack = d3.layout.stack() // default view is "zero" for the count display.
+var stack = d3.layout.stack(); // default view is "zero" for the count display.
 
 var svg3 = d3
   .select("#my_dataviz3")
@@ -67,15 +67,15 @@ var svg3 = d3
   .append("g")
   .attr(
     "transform",
-    "translate(" + marginStacked.left + "," + marginStacked.top + ")",
-  )
+    "translate(" + marginStacked.left + "," + marginStacked.top + ")"
+  );
 
-var tooltip = d3.select("body").append("div").attr("class", "tooltip")
+var tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
-var percentClicked = false
+var percentClicked = false;
 
 function drawLegend() {
-  var labels = [...segmentsStacked]
+  var labels = [...segmentsStacked];
   var legend = svg3
     .selectAll(".legend")
     .data(color.domain().slice()) // what do you think this does?
@@ -83,9 +83,9 @@ function drawLegend() {
     .append("g")
     .attr("class", "legend")
     .attr("transform", function (d, i) {
-      return "translate(0," + i * 20 + ")"
+      return "translate(0," + i * 20 + ")";
       // return "translate(0," + Math.abs((i - 8) * 20) + ")"
-    })
+    });
   // Added the absolute value and transition. I reversed the names, so that I can continue to use category20(), but have health as green to make it stand out.
 
   legend
@@ -93,7 +93,7 @@ function drawLegend() {
     .attr("x", widthStacked)
     .attr("width", 18)
     .attr("height", 18)
-    .style("fill", color)
+    .style("fill", color);
 
   legend
     .append("text")
@@ -102,13 +102,13 @@ function drawLegend() {
     .attr("dy", ".35em")
     .style("text-anchor", "start")
     .text(function (d, i) {
-      return labels[i]
-    })
+      return labels[i];
+    });
 }
 
 // 첫 번째
 
-var isPending2 = 0
+var isPending2 = 0;
 d3.csv(csvPath3, function (error, movies) {
   var yearGenre = [
     {
@@ -271,11 +271,11 @@ d3.csv(csvPath3, function (error, movies) {
       Thriller: [0],
       "Music/Musical": [0],
     },
-  ]
+  ];
 
   for (let movie of movies) {
     for (let genre of genreList) {
-      yearGenre[parseInt(movie["year"]) - 2010][genre].push(movie[genre])
+      yearGenre[parseInt(movie["year"]) - 2010][genre].push(movie[genre]);
     }
   }
 
@@ -283,24 +283,24 @@ d3.csv(csvPath3, function (error, movies) {
     for (let genre of genreList) {
       yearGenre[index][genre] = yearGenre[index][genre].reduce(
         (acc, current) => parseInt(acc) + parseInt(current),
-        0,
-      )
+        0
+      );
     }
   }
 
-  data = [...yearGenre]
+  data = [...yearGenre];
 
   data.sort(function (a, b) {
-    return +a.total - +b.total
-  })
+    return +a.total - +b.total;
+  });
 
-  var stacked = stack(makeData(segmentsStacked, data))
+  var stacked = stack(makeData(segmentsStacked, data));
 
   xScale.domain(
     data.map(function (d) {
-      return d.year
-    }),
-  )
+      return d.year;
+    })
+  );
 
   svg3
     .append("g")
@@ -310,7 +310,7 @@ d3.csv(csvPath3, function (error, movies) {
     .selectAll("text")
     .attr("dy", "1em")
     .attr("dx", "1em")
-    .style("text-anchor", "end")
+    .style("text-anchor", "end");
 
   svg3
     .append("g")
@@ -320,7 +320,7 @@ d3.csv(csvPath3, function (error, movies) {
     .attr("transform", "rotate(-90)")
     .attr("y", 6)
     .attr("dy", ".71em")
-    .style("text-anchor", "end")
+    .style("text-anchor", "end");
   // .text("segmentsStacked")
 
   var year = svg3
@@ -330,59 +330,59 @@ d3.csv(csvPath3, function (error, movies) {
     .append("g")
     .attr("class", "year")
     .style("fill", function (d, i) {
-      return color(i)
-    })
+      return color(i);
+    });
 
   var rectangles = year
     .selectAll("rect")
     .data(function (d) {
       // console.log("array for a rectangle");
-      return d
+      return d;
     }) // this just gets the array for bar segment.
     .enter()
     .append("rect")
-    .attr("width", xScale.rangeBand())
+    .attr("width", xScale.rangeBand());
 
   // this just draws them in the default way, now they're appended.
-  transitionCount()
+  transitionCount();
 
-  drawLegend()
+  drawLegend();
 
-  d3.selectAll("input").on("change", handleFormClick)
+  d3.selectAll("input").on("change", handleFormClick);
 
   // All the functions for stuff above!
 
   function handleFormClick() {
     if (this.value === "bypercent") {
-      percentClicked = true
-      transitionPercent()
+      percentClicked = true;
+      transitionPercent();
     } else {
-      percentClicked = false
-      transitionCount()
+      percentClicked = false;
+      transitionCount();
     }
   }
 
   function makeData(segmentsStacked, data) {
     return segmentsStacked.map(function (component) {
       return data.map(function (d) {
-        return { x: d["year"], y: +d[component], component: component }
-      })
-    })
+        return { x: d["year"], y: +d[component], component: component };
+      });
+    });
   }
 
   function transitionPercent() {
-    yAxis.tickFormat(d3.format("%"))
-    stack.offset("expand") // use this to get it to be relative/normalized!
-    var stacked = stack(makeData(segmentsStacked, data))
+    yAxis.tickFormat(d3.format("%"));
+    stack.offset("expand"); // use this to get it to be relative/normalized!
+    var stacked = stack(makeData(segmentsStacked, data));
     // call function to do the bars, which is same across both formats.
-    transitionRects(stacked)
+    transitionRects(stacked);
   }
 
   function transitionCount() {
-    yAxis.tickFormat(d3.format(".2s")) // for the stacked totals version
-    stack.offset("zero")
-    var stacked = stack(makeData(segmentsStacked, data))
-    transitionRects(stacked)
+    yAxis.tickFormat(d3.format(".2s")); // for the stacked totals version
+    stack.offset("zero");
+    var stacked = stack(makeData(segmentsStacked, data));
+    transitionRects(stacked);
   }
 
   function transitionRects(stacked) {
@@ -390,33 +390,33 @@ d3.csv(csvPath3, function (error, movies) {
     yScale.domain([
       0,
       d3.max(stacked[stacked.length - 1], function (d) {
-        return d.y0 + d.y
+        return d.y0 + d.y;
       }),
-    ])
+    ]);
 
     // attach new fixed data
-    var year = svg3.selectAll(".year").data(stacked)
+    var year = svg3.selectAll(".year").data(stacked);
 
     // same on the rects
     year.selectAll("rect").data(function (d) {
-      return d
-    }) // this just gets the array for bar segment.
+      return d;
+    }); // this just gets the array for bar segment.
 
     svg3
       .selectAll("g.year rect")
       .transition()
       .duration(250)
       .attr("x", function (d) {
-        return xScale(d.x)
+        return xScale(d.x);
       })
       .attr("y", function (d) {
-        return yScale(d.y0 + d.y)
+        return yScale(d.y0 + d.y);
       }) //
       .attr("height", function (d) {
-        return yScale(d.y0) - yScale(d.y0 + d.y)
-      }) // height is base - tallness
+        return yScale(d.y0) - yScale(d.y0 + d.y);
+      }); // height is base - tallness
 
-    svg3.selectAll(".y.axis").transition().call(yAxis)
+    svg3.selectAll(".y.axis").transition().call(yAxis);
   }
   // =====================================================================
   // Building a legend by hand, based on http://bl.ocks.org/mbostock/3886208
@@ -457,59 +457,59 @@ d3.csv(csvPath3, function (error, movies) {
   // function mouseoutFunc(d) {
   //   return tooltip.style("display", "none") // this sets it to invisible!
   // }
-})
+});
 
 // 업데이트
 function updateData3() {
   if (isPending2 == 0) {
-    isPending2 = 1
-    d3.select("#my_dataviz3").select("svg").remove()
+    isPending2 = 1;
+    d3.select("#my_dataviz3").select("svg").remove();
 
     d3.csv(csvPath3, function (error, data) {
       var GenreStateSum2 = Object.values(state.genres).reduce(
         (acc, current) => acc + current,
-        0,
-      )
+        0
+      );
 
       // or 체크된 장르가 있는 경우
       if (GenreStateSum2 !== 0) {
-        var orFilteredGenres2 = []
+        var orFilteredGenres2 = [];
         for (genre in state.genres) {
           if (state.genres[genre] == 1) {
-            orFilteredGenres2.push(genre)
+            orFilteredGenres2.push(genre);
           }
         }
 
         // 체크된 장르들 중 어떤 것에도 속하지 않는 데이터 제거
         data = data.filter((x) => {
-          let temp = []
+          let temp = [];
           for (key of orFilteredGenres2) {
-            temp.push(x[key])
+            temp.push(x[key]);
           }
 
           if (temp.reduce((acc, current) => acc + current, 0) >= 1) {
-            return true
+            return true;
           } else {
-            return false
+            return false;
           }
-        })
+        });
       }
 
       var Genre2StateSum2 = Object.values(state.genres2).reduce(
         (acc, current) => acc + current,
-        0,
-      )
+        0
+      );
 
       // and 체크된 장르가 있는 경우
       if (Genre2StateSum2 !== 0) {
-        var andFilteredGenres2 = []
+        var andFilteredGenres2 = [];
         for (genre in state.genres) {
           if (state.genres2[genre + "2"] == 1) {
-            andFilteredGenres2.push(genre)
+            andFilteredGenres2.push(genre);
           }
         }
         for (genre of andFilteredGenres2) {
-          data = data.filter((x) => x[genre] == 1)
+          data = data.filter((x) => x[genre] == 1);
         }
       }
 
@@ -517,8 +517,8 @@ function updateData3() {
         data = data.filter(
           (x) =>
             (x[key] >= brushingFilter[key][0]) &
-            (x[key] <= brushingFilter[key][1]),
-        )
+            (x[key] <= brushingFilter[key][1])
+        );
       }
 
       yearGenre = [
@@ -682,7 +682,7 @@ function updateData3() {
           Thriller: [0],
           "Music/Musical": [0],
         },
-      ]
+      ];
 
       rereleasedYearGenre = [
         {
@@ -925,17 +925,17 @@ function updateData3() {
           Thriller: [0],
           "Music/Musical": [0],
         },
-      ]
+      ];
 
       for (let movie of data) {
         for (let genre of genreList) {
           if (state.rereleased == 0) {
-            yearGenre[parseInt(movie["year"]) - 2010][genre].push(movie[genre])
+            yearGenre[parseInt(movie["year"]) - 2010][genre].push(movie[genre]);
           } else {
             if (movie["re_year1"] >= 2010) {
               rereleasedYearGenre[parseInt(movie["re_year1"]) - 2010][
                 genre
-              ].push(movie[genre])
+              ].push(movie[genre]);
             }
           }
         }
@@ -946,35 +946,35 @@ function updateData3() {
           for (let genre of genreList) {
             yearGenre[index][genre] = yearGenre[index][genre].reduce(
               (acc, current) => parseInt(acc) + parseInt(current),
-              0,
-            )
+              0
+            );
           }
         }
 
-        data = [...yearGenre]
+        data = [...yearGenre];
       } else {
         for (let index in rereleasedYearGenre) {
           for (let genre of genreList) {
             rereleasedYearGenre[index][genre] = rereleasedYearGenre[index][
               genre
-            ].reduce((acc, current) => parseInt(acc) + parseInt(current), 0)
+            ].reduce((acc, current) => parseInt(acc) + parseInt(current), 0);
           }
         }
 
-        data = [...rereleasedYearGenre]
+        data = [...rereleasedYearGenre];
       }
 
       data.sort(function (a, b) {
-        return +a.total - +b.total
-      })
+        return +a.total - +b.total;
+      });
 
-      var stacked = stack(makeData(segmentsStacked, data))
+      var stacked = stack(makeData(segmentsStacked, data));
 
       xScale.domain(
         data.map(function (d) {
-          return d.year
-        }),
-      )
+          return d.year;
+        })
+      );
 
       svg3 = d3
         .select("#my_dataviz3")
@@ -982,13 +982,13 @@ function updateData3() {
         .attr("width", widthStacked + marginStacked.left + marginStacked.right)
         .attr(
           "height",
-          heightStacked + marginStacked.top + marginStacked.bottom,
+          heightStacked + marginStacked.top + marginStacked.bottom
         )
         .append("g")
         .attr(
           "transform",
-          "translate(" + marginStacked.left + "," + marginStacked.top + ")",
-        )
+          "translate(" + marginStacked.left + "," + marginStacked.top + ")"
+        );
 
       svg3
         .append("g")
@@ -998,7 +998,7 @@ function updateData3() {
         .selectAll("text")
         .attr("dy", "1em")
         .attr("dx", "1em")
-        .style("text-anchor", "end")
+        .style("text-anchor", "end");
 
       svg3
         .append("g")
@@ -1008,7 +1008,7 @@ function updateData3() {
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", ".71em")
-        .style("text-anchor", "end")
+        .style("text-anchor", "end");
       // .text("segmentsStacked")
 
       var year = svg3
@@ -1018,59 +1018,59 @@ function updateData3() {
         .append("g")
         .attr("class", "year")
         .style("fill", function (d, i) {
-          return color(i)
-        })
+          return color(i);
+        });
 
       var rectangles = year
         .selectAll("rect")
         .data(function (d) {
           // console.log("array for a rectangle");
-          return d
+          return d;
         }) // this just gets the array for bar segment.
         .enter()
         .append("rect")
-        .attr("width", xScale.rangeBand())
+        .attr("width", xScale.rangeBand());
 
       // this just draws them in the default way, now they're appended.
-      transitionCount()
+      transitionCount();
 
-      drawLegend()
+      drawLegend();
 
-      d3.selectAll("input").on("change", handleFormClick)
+      d3.selectAll("input").on("change", handleFormClick);
 
       // All the functions for stuff above!
 
       function handleFormClick() {
         if (this.value === "bypercent") {
-          percentClicked = true
-          transitionPercent()
+          percentClicked = true;
+          transitionPercent();
         } else {
-          percentClicked = false
-          transitionCount()
+          percentClicked = false;
+          transitionCount();
         }
       }
 
       function makeData(segmentsStacked, data) {
         return segmentsStacked.map(function (component) {
           return data.map(function (d) {
-            return { x: d["year"], y: +d[component], component: component }
-          })
-        })
+            return { x: d["year"], y: +d[component], component: component };
+          });
+        });
       }
 
       function transitionPercent() {
-        yAxis.tickFormat(d3.format("%"))
-        stack.offset("expand") // use this to get it to be relative/normalized!
-        var stacked = stack(makeData(segmentsStacked, data))
+        yAxis.tickFormat(d3.format("%"));
+        stack.offset("expand"); // use this to get it to be relative/normalized!
+        var stacked = stack(makeData(segmentsStacked, data));
         // call function to do the bars, which is same across both formats.
-        transitionRects(stacked)
+        transitionRects(stacked);
       }
 
       function transitionCount() {
-        yAxis.tickFormat(d3.format(".2s")) // for the stacked totals version
-        stack.offset("zero")
-        var stacked = stack(makeData(segmentsStacked, data))
-        transitionRects(stacked)
+        yAxis.tickFormat(d3.format(".2s")); // for the stacked totals version
+        stack.offset("zero");
+        var stacked = stack(makeData(segmentsStacked, data));
+        transitionRects(stacked);
       }
 
       function transitionRects(stacked) {
@@ -1078,39 +1078,39 @@ function updateData3() {
         yScale.domain([
           0,
           d3.max(stacked[stacked.length - 1], function (d) {
-            return d.y0 + d.y
+            return d.y0 + d.y;
           }),
-        ])
+        ]);
 
         // attach new fixed data
-        var year = svg3.selectAll(".year").data(stacked)
+        var year = svg3.selectAll(".year").data(stacked);
 
         // same on the rects
         year.selectAll("rect").data(function (d) {
-          return d
-        }) // this just gets the array for bar segment.
+          return d;
+        }); // this just gets the array for bar segment.
 
         svg3
           .selectAll("g.year rect")
           .transition()
           .duration(250)
           .attr("x", function (d) {
-            return xScale(d.x)
+            return xScale(d.x);
           })
           .attr("y", function (d) {
-            return yScale(d.y0 + d.y)
+            return yScale(d.y0 + d.y);
           }) //
           .attr("height", function (d) {
-            return yScale(d.y0) - yScale(d.y0 + d.y)
-          }) // height is base - tallness
+            return yScale(d.y0) - yScale(d.y0 + d.y);
+          }); // height is base - tallness
 
-        svg3.selectAll(".y.axis").transition().call(yAxis)
+        svg3.selectAll(".y.axis").transition().call(yAxis);
       }
       // =====================================================================
       // Building a legend by hand, based on http://bl.ocks.org/mbostock/3886208
       // ===================================================================
-    })
+    });
 
-    isPending2 = 0
+    isPending2 = 0;
   }
 }
